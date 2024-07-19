@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct CategoryHome: View {
-    @EnvironmentObject private var modelData: ModelData
+    @EnvironmentObject var modelData: ModelData
+    @State private var showProfile = false
     
     var body: some View {
         NavigationView {
@@ -25,7 +26,18 @@ struct CategoryHome: View {
                 }
                 .listRowInsets(EdgeInsets())
             }
+            .listStyle(.inset)
             .navigationTitle("Featured")
+            .toolbar {
+                Button {
+                    showProfile.toggle()
+                } label: {
+                    Label("User Profile", systemImage: "person.crop.circle")
+                }
+            }
+            .sheet(isPresented: $showProfile) {
+                ProfileHost()
+            }
             Text("Select a landmark")
         }
     }
